@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Резултати – Админ</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+    th { background-color: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h1>🏆 Класиране</h1>
+  <table id="results-table">
+    <thead>
+      <tr>
+        <th>Име</th>
+        <th>Точки</th>
+        <th>Време</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC347ETQi-etyfa1rv_E18cOw-JvhowdLc",
+      authDomain: "stayprof-18b6e.firebaseapp.com",
+      databaseURL: "https://stayprof-18b6e-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "stayprof-18b6e",
+      storageBucket: "stayprof-18b6e.firebasestorage.app",
+      messagingSenderId: "613932567888",
+      appId: "1:613932567888:web:962448ec2a42046eda7055"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const resultsRef = ref(db, 'results');
+
+    const tbody = document.querySelector("#results-table tbody");
+
+    onValue(resultsRef, (snapshot) => {
+      const data = snapshot.val();
+      const results = [];
+
+      for (let id in data) {
+        const item = data[id];
+        const timeParts = item.time.split(":").map(Number);
+        const totalSeconds = timeParts[0] * 60 + timeParts[1];
+
+        results.push({
+          name: item.name,
+          score: item.score,
+          time: item.time,
+          seconds: totalSeconds
+        });
+      }
+
+      results.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return a.seconds - b.seconds;
+      });
+
+      tbody.innerHTML = "";
+      results.forEach(r => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${r.name}</td>
+          <td>${r.score}</td>
+          <td>${r.time}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    });
+  </script>
+</body>
+</html>
