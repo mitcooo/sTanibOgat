@@ -1,46 +1,47 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+// Firebase конфигурация
+const firebaseConfig = {
+  apiKey: "AIzaSyC347ETQi-etyfa1rv_E18cOw-JvhowdLc",
+  authDomain: "stayprof-18b6e.firebaseapp.com",
+  databaseURL: "https://stayprof-18b6e-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "stayprof-18b6e",
+  storageBucket: "stayprof-18b6e.firebasestorage.app",
+  messagingSenderId: "613932567888",
+  appId: "1:613932567888:web:962448ec2a42046eda7055"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Променливи
 let questions = [];
 let currentQuestionIndex = 0;
-let score = 0; // брояч за правилни отговори
-let startTime, endTime;
-
-let prizeMoney = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 3000, 5000, 10000 , 20000, 30000, 50000, 100000];
-
+let correctAnswers = 0;
+let startTime;
 let playerName = prompt("Въведи името си:");
 
-// Вместо prizeMoney, можем да ползваме score, но можеш да оставиш и наградите
-
+// DOM елементи
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
 const moneyEl = document.getElementById('money');
 const fiftyFiftyBtn = document.getElementById('fifty-fifty');
-
-let currentAnswerButtons = [];
-let fiftyUsed = false; 
-let audienceUsed = false;
-
 const audienceHelpBtn = document.getElementById('audience-help');
 
+let currentAnswerButtons = [];
+let fiftyUsed = false;
+let audienceUsed = false;
+
+// Зареждане на въпроси
 async function loadQuestions() {
-  playerName = prompt("Въведете име на отбора:");
-  if (!playerName) playerName = "Без име";
-
-  startTime = Date.now();
-
   const res = await fetch('questions.json');
   questions = await res.json();
-  showQuestion();
-  
-  questions = await res.json();
-  startTime = Date.now();  // Започва времето при зареждане на въпросите
+  startTime = new Date();
   showQuestion();
 }
 
 function showQuestion() {
-  if(currentQuestionIndex >= questions.length){
-    endGame();
-    return;
-  }
-  
   const q = questions[currentQuestionIndex];
   questionEl.textContent = q.question;
   answersEl.innerHTML = '';
@@ -54,26 +55,57 @@ function showQuestion() {
     currentAnswerButtons.push({ element: btn, correct: answer.correct });
   });
 
-  moneyEl.textContent = `Текущ резултат: ${score} точки`;
-
+  moneyEl.textContent = `Въпрос ${currentQuestionIndex + 1} от ${questions.length}`;
   fiftyFiftyBtn.disabled = fiftyUsed;
   audienceHelpBtn.disabled = audienceUsed;
 }
 
 function selectAnswer(correct) {
-  if (correct) {
-    score++;
-  }
+  if (correct) correctAnswers++;
+
   currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    showQuestion();
+  } else {
+    endGame();
+  }
+}
+
+function endGame() {
+  const endTime = new Date();
+  const seconds = Math.floor((endTime - startTime) / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const restSeconds = seconds % 60;
+  const timeFormatted = `${minutes}:${restSeconds.toString().padStart(2, '0')}`;
+
+  // Покажи в конзолата
+  console.log(`Играч: ${playerName}, Точки: ${correctAnswers}, Време: ${timeFormatted}`);
+
+  // Запис във Firebase
+  const resultRef = ref(db, 'results');
+  push(resultRef, {
+    name: playerName,
+    score: correctAnswers,
+    time: timeFormatted
+  });
+
+  alert(`Благодарим ти, ${playerName}!\nТочки: ${correctAnswers}\nВреме: ${timeFormatted}`);
+  resetGame();
+}
+
+function resetGame() {
+  currentQuestionIndex = 0;
+  correctAnswers = 0;
+  fiftyUsed = false;
+  audienceUsed = false;
   showQuestion();
 }
 
+// 50/50
 fiftyFiftyBtn.addEventListener('click', () => {
-  if (fiftyUsed) return; 
-
+  if (fiftyUsed) return;
   const incorrect = currentAnswerButtons.filter(btn => !btn.correct);
   const correct = currentAnswerButtons.find(btn => btn.correct);
-
   const randomIncorrect = incorrect[Math.floor(Math.random() * incorrect.length)];
 
   currentAnswerButtons.forEach(btn => {
@@ -82,96 +114,32 @@ fiftyFiftyBtn.addEventListener('click', () => {
     }
   });
 
+  fiftyUsed = true;
   fiftyFiftyBtn.disabled = true;
-  fiftyUsed = true; 
 });
 
-function showAudienceHelp() {
+// Помощ от публиката
+audienceHelpBtn.addEventListener('click', () => {
   if (audienceUsed) return;
 
   const correctBtn = currentAnswerButtons.find(btn => btn.correct);
   const incorrectBtns = currentAnswerButtons.filter(btn => !btn.correct);
 
   const correctPercent = Math.floor(Math.random() * 31) + 50;
-
-  let remainingPercent = 100 - correctPercent;
-  let percentages = [];
-
-  if (incorrectBtns.length === 2) {
-    const first = Math.floor(Math.random() * (remainingPercent + 1));
-    const second = remainingPercent - first;
-    percentages = [first, second];
-  } else if (incorrectBtns.length === 3) {
-    let parts = [];
-    let sum = 0;
-    for (let i = 0; i < 2; i++) {
-      const val = Math.floor(Math.random() * (remainingPercent - sum));
-      parts.push(val);
-      sum += val;
-    }
-    parts.push(remainingPercent - sum);
-    percentages = parts;
-  } else {
-    percentages = [];
-  }
-
-  currentAnswerButtons.forEach((btnObj, i) => {
-    let percent;
-    if (btnObj.correct) {
-      percent = correctPercent;
-    } else {
-      percent = percentages.shift() || 0;
-    }
-
-    btnObj.element.textContent = `${btnObj.element.textContent} (${percent}%)`;
+  let remaining = 100 - correctPercent;
+  let percentages = incorrectBtns.map(() => {
+    const p = Math.floor(Math.random() * remaining);
+    remaining -= p;
+    return p;
   });
 
-  audienceHelpBtn.disabled = true;
+  currentAnswerButtons.forEach(btnObj => {
+    let percent = btnObj.correct ? correctPercent : (percentages.shift() || 0);
+    btnObj.element.textContent += ` (${percent}%)`;
+  });
+
   audienceUsed = true;
-}
-
-audienceHelpBtn.addEventListener('click', showAudienceHelp);
-
-function endGame() {
-  endTime = Date.now();
-  const timeSpent = (endTime - startTime) / 1000; // секунди
-  alert(`Играта приключи!\nИграч: ${playerName}\nТочки: ${score}\nВреме: ${timeSpent.toFixed(2)} секунди`);
-  resetGame();
-}
-
-function resetGame() {
-  currentQuestionIndex = 0;
-  score = 0;
-  fiftyUsed = false;
-  audienceUsed = false;
-  fiftyFiftyBtn.disabled = false;
-  audienceHelpBtn.disabled = false;
-  startTime = Date.now();
-  showQuestion();
-}
+  audienceHelpBtn.disabled = true;
+});
 
 loadQuestions();
-function endGame() {
-  const endTime = Date.now();
-  const elapsedSeconds = Math.floor((endTime - startTime) / 1000);
-  const minutes = Math.floor(elapsedSeconds / 60);
-  const seconds = elapsedSeconds % 60;
-
-  const result = {
-    name: playerName,
-    score: currentQuestionIndex,
-    time: `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
-  };
-
-  // Вземи съществуващи резултати
-  let results = JSON.parse(localStorage.getItem("quizResults")) || [];
-
-  // Добави новия резултат
-  results.push(result);
-
-  // Запиши обратно
-  localStorage.setItem("quizResults", JSON.stringify(results));
-
-  // Пренасочи към results.html
-  window.location.href = "results.html";
-}
