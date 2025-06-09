@@ -1,20 +1,38 @@
 [
     {
-      "question": "Коя е столицата на Франция?",
+      "question": "Кой компонент е „мозъкът“ на компютъра?",
       "answers": [
-        { "text": "Берлин", "correct": false },
-        { "text": "Мадрид", "correct": false },
-        { "text": "Париж", "correct": true },
-        { "text": "Рим", "correct": false }
+        { "text": "Захранване", "correct": false },
+        { "text": "Дънна платка", "correct": false },
+        { "text": "Процесор", "correct": true },
+        { "text": "Видеокарта", "correct": false }
       ]
     },
     {
-      "question": "Коя планета е известна като Червената планета?",
+      "question": "Каква е основната функция на дънната платка?",
       "answers": [
-        { "text": "Земя", "correct": false },
-        { "text": "Венера", "correct": false },
-        { "text": "Марс", "correct": true },
-        { "text": "Юпитер", "correct": false }
+        { "text": "Генерира електричество", "correct": false },
+        { "text": "Съхранява информация", "correct": false },
+        { "text": "Свързва всички компоненти", "correct": true },
+        { "text": "Показва изображението", "correct": false }
+      ]
+    },
+    {
+      "question": "Къде се поставя RAM паметта?",
+      "answers": [
+        { "text": "В DIMM слот на дънната платка", "correct": true  },
+        { "text": "В USB порт", "correct": false },
+        { "text": "В PCI слот", "correct": false},
+        { "text": "В твърдия диск", "correct": false }
+      ]
+    },
+    {
+      "question": "Кое устройство съхранява дълготрайно файлове и програми?",
+      "answers": [
+        { "text": "RAM", "correct": false },
+        { "text": "SSD / HDD", "correct": true },
+        { "text": "Процесор", "correct": false },
+        { "text": "Захранване", "correct": false }
       ]
     }
 ]
