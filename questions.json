@@ -1,4 +1,5 @@
-[
+[ 
+  
     {
       "question": "Кой компонент е „мозъкът“ на компютъра?",
       "answers": [
@@ -34,6 +35,104 @@
         { "text": "Процесор", "correct": false },
         { "text": "Захранване", "correct": false }
       ]
+    },
+    {
+      "question": "Коя част на компютъра преобразува електричеството за нуждите на системата?",
+      "answers": [
+        { "text": "Захранващ блок", "correct": true  },
+        { "text": "Вентилатор", "correct": false },
+        { "text": "Процесор", "correct": false},
+        { "text": "Монитор", "correct": false }
+      ]
+    },
+    {
+      "question": "Коя е първата стъпка при асемблиране на компютър?",
+      "answers": [
+        { "text": "Свързване на мишката", "correct": false },
+        { "text": "Монтаж на дънна платка", "correct": true },
+        { "text": "Инсталиране на Windows", "correct": false },
+        { "text": "Поставяне на USB флашка", "correct": false }
+      ]
+    },
+    {
+      "question": "Каква е функцията на охладителя (cooler)?",
+      "answers": [
+        { "text": "Изтрива данни", "correct":  false },
+        { "text": "Засилва интернет връзката", "correct": false },
+        { "text": "Понижава температурата на процесора", "correct": true},
+        { "text": "Увеличава звука", "correct": false }
+      ]
+    },
+    {
+      "question": "Какво представлява BIOS/UEFI?",
+      "answers": [
+        { "text": "Операционна система", "correct": false },
+        { "text": "Програма за обработка на текст", "correct": false},
+        { "text": "Фърмуер за стартиране на компютъра", "correct": true  },
+        { "text": "Приложение за рисуване", "correct": false }
+      ]
+    },
+    {
+      "question": "Кой компонент свързва потребителя с компютъра чрез визуален изход?",
+      "answers": [
+        { "text": "Дънна платка", "correct":  false },
+        { "text": "Процесор", "correct": false },
+        { "text": "Монитор", "correct": true},
+        { "text": "RAM", "correct": false }
+      ]
+    },
+    {
+      "question": "Къде се поставя процесорът при асемблиране?",
+      "answers": [
+        { "text": "В HDMI порт", "correct": false },
+        { "text": "В CPU сокет на дънната платка", "correct": true },
+        { "text": "В RAM слот", "correct":  false},
+        { "text": "В USB порт", "correct": false }
+      ]
+    },
+    {
+      "question": "Как се нарича устройството, което охлажда компоненти с помощта на въздушен поток?",
+      "answers": [
+        { "text": "Видеокарта", "correct":  false },
+        { "text": "HDD", "correct": false },
+        { "text": "Звукова карта", "correct": false},
+        { "text": "Вентилатор", "correct": true }
+      ]
+    },
+    {
+      "question": "Какъв тип кабел се използва най-често за създаване на мрежов кабел?",
+      "answers": [
+        { "text": "Коаксиален", "correct": false },
+        { "text": "UTP (усукан чифт, неекраниран)", "correct": true },
+        { "text": "Оптичен", "correct":  false},
+        { "text": "HDMI", "correct": false }
+      ]
+    },
+    {
+      "question": "Кой стандарт се използва при подреждане на цветовете за прав мрежов кабел?",
+      "answers": [
+        { "text": "IEEE 802.3c", "correct": false },
+        { "text": "RJ11", "correct": false },
+        { "text": "T568A или T568B", "correct":  true},
+        { "text": "USB-C", "correct": false }
+      ]
+    },
+    {
+      "question": "Какъв накрайник (конектор) се използва при мрежовите Ethernet кабели?",
+      "answers": [
+        { "text": "RJ45", "correct": true  },
+        { "text": "DB9", "correct": false },
+        { "text": "RJ11", "correct": false},
+        { "text": "VGA", "correct": false }
+      ]
+    },
+    {
+      "question": "При изработка на прав кабел, как трябва да се подредят цветовете на двата края?",
+      "answers": [
+        { "text": "Различен стандарт на двата края", "correct": false },
+        { "text": "Еднакъв цветови стандарт на двата края (T568A – T568A или T568B – T568B)", "correct": true },
+        { "text": "Само зелената двойка се разменя", "correct":  false},
+        { "text": "HБез значение, стига да са усукани", "correct": false }
+      ]
     }
 ]
-  
