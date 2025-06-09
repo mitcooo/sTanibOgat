@@ -1,6 +1,11 @@
 let questions = [];
 let currentQuestionIndex = 0;
-let prizeMoney = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 3000, 5000, 10000 , 20000, 30000, 50000, 100000];
+let score = 0; // брояч за правилни отговори
+let startTime, endTime;
+
+let playerName = prompt("Въведи името си:");
+
+// Вместо prizeMoney, можем да ползваме score, но можеш да оставиш и наградите
 
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
@@ -9,14 +14,23 @@ const fiftyFiftyBtn = document.getElementById('fifty-fifty');
 
 let currentAnswerButtons = [];
 let fiftyUsed = false; 
+let audienceUsed = false;
+
+const audienceHelpBtn = document.getElementById('audience-help');
 
 async function loadQuestions() {
   const res = await fetch('questions.json');
   questions = await res.json();
+  startTime = Date.now();  // Започва времето при зареждане на въпросите
   showQuestion();
 }
 
 function showQuestion() {
+  if(currentQuestionIndex >= questions.length){
+    endGame();
+    return;
+  }
+  
   const q = questions[currentQuestionIndex];
   questionEl.textContent = q.question;
   answersEl.innerHTML = '';
@@ -30,26 +44,19 @@ function showQuestion() {
     currentAnswerButtons.push({ element: btn, correct: answer.correct });
   });
 
-  moneyEl.textContent = `Текуща награда: $${prizeMoney[currentQuestionIndex]}`;
+  moneyEl.textContent = `Текущ резултат: ${score} точки`;
 
   fiftyFiftyBtn.disabled = fiftyUsed;
-}
-function selectAnswer(correct) {
-  if (correct) {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-      showQuestion();
-    } else {
-      alert("Поздравления! Спечелихте 100000!");
-      resetGame(); 
-    }
-  } else {
-    const earned = currentQuestionIndex > 0 ? prizeMoney[currentQuestionIndex - 1] : 0;
-    alert(`Грешен отговор! Край на играта. Спечелихте $${earned}.`);
-    resetGame();
-  }
+  audienceHelpBtn.disabled = audienceUsed;
 }
 
+function selectAnswer(correct) {
+  if (correct) {
+    score++;
+  }
+  currentQuestionIndex++;
+  showQuestion();
+}
 
 fiftyFiftyBtn.addEventListener('click', () => {
   if (fiftyUsed) return; 
@@ -69,16 +76,11 @@ fiftyFiftyBtn.addEventListener('click', () => {
   fiftyUsed = true; 
 });
 
-const audienceHelpBtn = document.getElementById('audience-help');
-let audienceUsed = false;
-
 function showAudienceHelp() {
   if (audienceUsed) return;
 
-
   const correctBtn = currentAnswerButtons.find(btn => btn.correct);
   const incorrectBtns = currentAnswerButtons.filter(btn => !btn.correct);
-
 
   const correctPercent = Math.floor(Math.random() * 31) + 50;
 
@@ -103,7 +105,6 @@ function showAudienceHelp() {
     percentages = [];
   }
 
-
   currentAnswerButtons.forEach((btnObj, i) => {
     let percent;
     if (btnObj.correct) {
@@ -121,14 +122,20 @@ function showAudienceHelp() {
 
 audienceHelpBtn.addEventListener('click', showAudienceHelp);
 
-function resetGame() {
-  currentQuestionIndex = 0;
-  fiftyUsed = false;
-  audienceUsed = false;
-  audienceHelpBtn.disabled = false;
-  fiftyFiftyBtn.disabled = false;
-  showQuestion();
+function endGame() {
+  endTime = Date.now();
+  const timeSpent = (endTime - startTime) / 1000; // секунди
+  alert(`Играта приключи!\nИграч: ${playerName}\nТочки: ${score}\nВреме: ${timeSpent.toFixed(2)} секунди`);
+  resetGame();
 }
 
-
-loadQuestions();
+function resetGame() {
+  currentQuestionIndex = 0;
+  score = 0;
+  fiftyUsed = false;
+  audienceUsed = false;
+  fiftyFiftyBtn.disabled = false;
+  audienceHelpBtn.disabled = false;
+  startTime = Date.now();
+  showQuestion();
+}
