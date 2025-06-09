@@ -13,6 +13,7 @@
 </head>
 <body>
   <h1>🏆 Класиране</h1>
+  <button id="reset-btn">Ресетирай класирането</button>
   <table id="results-table">
     <thead>
       <tr>
@@ -60,6 +61,21 @@
           seconds: totalSeconds
         });
       }
+      import { remove } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+const resetBtn = document.getElementById('reset-btn');
+
+resetBtn.addEventListener('click', () => {
+  if (confirm("Сигурен ли си, че искаш да изтриеш всички резултати?")) {
+    remove(resultsRef)
+      .then(() => {
+        alert("Класирането е изчистено успешно!");
+      })
+      .catch((error) => {
+        alert("Грешка при изтриването: " + error);
+      });
+  }
+});
 
       results.sort((a, b) => {
         if (b.score !== a.score) return b.score - a.score;
