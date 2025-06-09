@@ -1,0 +1,21 @@
+[
+    {
+      "question": "Коя е столицата на Франция?",
+      "answers": [
+        { "text": "Берлин", "correct": false },
+        { "text": "Мадрид", "correct": false },
+        { "text": "Париж", "correct": true },
+        { "text": "Рим", "correct": false }
+      ]
+    },
+    {
+      "question": "Коя планета е известна като Червената планета?",
+      "answers": [
+        { "text": "Земя", "correct": false },
+        { "text": "Венера", "correct": false },
+        { "text": "Марс", "correct": true },
+        { "text": "Юпитер", "correct": false }
+      ]
+    }
+]
+  

@@ -1,0 +1,203 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom right, rgb(39, 65, 133), rgb(20, 20, 40));
+    color: white;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.game-container {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgb(237, 234, 45);
+    border-radius: 16px;
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid rgb(237, 234, 45);
+    object-fit: cover;
+}
+
+.school-name {
+    font-size: 1.3rem;
+    color: rgb(237, 234, 45);
+    text-shadow: 1px 1px 4px black;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: white;
+    text-shadow: 2px 2px 5px rgb(39, 65, 133);
+    margin-bottom: 25px;
+}
+
+#question {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: white;
+}
+
+#answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+#answers button {
+    padding: 12px;
+    font-size: 1rem;
+    background-color: rgb(39, 65, 133);
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#answers button:hover {
+    background-color: rgb(209, 43, 37);
+    border-color: rgb(237, 234, 45);
+    transform: scale(1.05);
+}
+
+#money {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: rgb(237, 234, 45);
+}
+
+@media (max-width: 600px) {
+    #answers {
+        grid-template-columns: 1fr;
+    }
+
+    .game-container {
+        padding: 20px;
+    }
+}
+
+.navbar {
+    width: 100%;
+    background-color: rgb(39, 65, 133);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.nav-logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: rgb(237, 234, 45);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: rgb(237, 234, 45);
+}
+
+body {
+    padding-top: 70px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: rgb(237, 234, 45);
+    gap: 10px;
+}
+
+.nav-logo .logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgb(237, 234, 45);
+    object-fit: cover;
+}
+
+#fifty-fifty, #audience-help {
+    padding: 12px 20px;
+    font-size: 1rem;
+    background-color: rgb(237, 234, 45);
+    color: rgb(20, 20, 40);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+#fifty-fifty:hover, #audience-help:hover {
+    background-color: rgb(209, 43, 37);
+    color: white;
+    transform: scale(1.05);
+}
+
+#fifty-fifty:disabled, #audience-help:disabled {
+    background-color: gray;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.lifelines {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.answer-percentage {
+    height: 8px;
+    background-color: rgb(237, 234, 45);
+    border-radius: 5px;
+    margin-top: 5px;
+    transition: width 0.7s ease;
+}

@@ -1,0 +1,122 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, rgb(39, 65, 133), rgb(20, 20, 40));
+  color: white;
+  min-height: 100vh;
+  padding-top: 70px;
+}
+
+.navbar {
+  width: 100%;
+  background-color: rgb(39, 65, 133);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: rgb(237, 234, 45);
+  gap: 10px;
+}
+
+.nav-logo .logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgb(237, 234, 45);
+  object-fit: cover;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: rgb(237, 234, 45);
+}
+
+.rules-container {
+  max-width: 800px;
+  margin: 100px auto 40px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgb(237, 234, 45);
+  border-radius: 16px;
+  color: white;
+  text-align: left;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.rules-container h1 {
+  color: rgb(237, 234, 45);
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.rules-list {
+  list-style-type: decimal;
+  padding-left: 20px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.game-container {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgb(237, 234, 45);
+  border-radius: 16px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  margin: 100px auto 40px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid rgb(237, 234, 45);
+  object-fit: cover;
+}
+
+.school-name {
+  font-size: 1.3rem;
+  color: rgb(237, 234, 45);
+  text-shadow: 1px 1px 4px black;
+}
