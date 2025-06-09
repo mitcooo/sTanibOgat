@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <title>Резултати</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+    h1 { text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>Резултати на отборите</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Отбор</th>
+        <th>Точки</th>
+        <th>Време</th>
+      </tr>
+    </thead>
+    <tbody id="results-body"></tbody>
+  </table>
+
+  <script>
+    const results = JSON.parse(localStorage.getItem("quizResults")) || [];
+
+    results.sort((a, b) => {
+      if (b.score === a.score) {
+        const [aMin, aSec] = a.time.split(':').map(Number);
+        const [bMin, bSec] = b.time.split(':').map(Number);
+        return (aMin * 60 + aSec) - (bMin * 60 + bSec);
+      }
+      return b.score - a.score;
+    });
+
+    const tbody = document.getElementById("results-body");
+    results.forEach(result => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${result.name}</td>
+        <td>${result.score}</td>
+        <td>${result.time}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  </script>
+</body>
+</html>
