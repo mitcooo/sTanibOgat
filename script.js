@@ -139,3 +139,5 @@ function resetGame() {
   startTime = Date.now();
   showQuestion();
 }
+
+loadQuestions();
