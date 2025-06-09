@@ -44,8 +44,9 @@ function selectAnswer(correct) {
       resetGame(); 
     }
   } else {
-    alert("Грешен отговор! Край на играта.");
-    resetGame(); 
+    const earned = currentQuestionIndex > 0 ? prizeMoney[currentQuestionIndex - 1] : 0;
+    alert(`Грешен отговор! Край на играта. Спечелихте $${earned}.`);
+    resetGame();
   }
 }
 
