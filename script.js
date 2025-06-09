@@ -3,6 +3,8 @@ let currentQuestionIndex = 0;
 let score = 0; // брояч за правилни отговори
 let startTime, endTime;
 
+let prizeMoney = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 3000, 5000, 10000 , 20000, 30000, 50000, 100000];
+
 let playerName = prompt("Въведи името си:");
 
 // Вместо prizeMoney, можем да ползваме score, но можеш да оставиш и наградите
@@ -19,7 +21,15 @@ let audienceUsed = false;
 const audienceHelpBtn = document.getElementById('audience-help');
 
 async function loadQuestions() {
+  playerName = prompt("Въведете име на отбора:");
+  if (!playerName) playerName = "Без име";
+
+  startTime = Date.now();
+
   const res = await fetch('questions.json');
+  questions = await res.json();
+  showQuestion();
+  
   questions = await res.json();
   startTime = Date.now();  // Започва времето при зареждане на въпросите
   showQuestion();
@@ -141,3 +151,27 @@ function resetGame() {
 }
 
 loadQuestions();
+function endGame() {
+  const endTime = Date.now();
+  const elapsedSeconds = Math.floor((endTime - startTime) / 1000);
+  const minutes = Math.floor(elapsedSeconds / 60);
+  const seconds = elapsedSeconds % 60;
+
+  const result = {
+    name: playerName,
+    score: currentQuestionIndex,
+    time: `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
+  };
+
+  // Вземи съществуващи резултати
+  let results = JSON.parse(localStorage.getItem("quizResults")) || [];
+
+  // Добави новия резултат
+  results.push(result);
+
+  // Запиши обратно
+  localStorage.setItem("quizResults", JSON.stringify(results));
+
+  // Пренасочи към results.html
+  window.location.href = "results.html";
+}
